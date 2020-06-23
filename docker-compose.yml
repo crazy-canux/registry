@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  fish-service:
+    image: harbor.domain.com/registry/registry:1.0.0
+    hostname: "fish-master"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+#      resources:
+#        limits:
+#          cpus: "2"
+#          memory: 512M
+    networks:
+      - ol0
+    volumes:
+      - '/opt/registry:/var/lib/registry'
+    environment:
+      - MODULE_NAME=fish.main
+      - PORT=8080
+      - LOG_LEVEL=debug
+      - MAX_WORKERS=12
+    ports:
+      - target: 8080
+        published: 8080
+        mode: ingress
+        protocol: tcp
+
+networks:
+  ol0:
+    driver: overlay
+    attachable: true
+    driver_opts:
+      com.docker.network.bridge.name: ol0
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.31.0.0/16
+

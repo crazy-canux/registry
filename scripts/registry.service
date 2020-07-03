@@ -1,0 +1,27 @@
+[Unit]
+Description=Container Registry Daemon
+After=network-online.target
+Wants=network-online.target
+StartLimitInterval=5s
+StartLimitBurst=3
+
+[Service]
+Type=simple
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+#ExecStartPre=
+ExecStart=/usr/bin/gunicorn -w 2 -k uvicorn.workers.UvicornWorker --log-level debug -b 0.0.0.0:8080 registry.main:app
+#ExecStartPost=
+RemainAfterExit=yes
+#ExecStop=
+#ExecStopPost=
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=control-group
+Restart=on-failure
+RestartSec=3s
+TimeoutSec=0
+
+[Install]
+WantedBy=multi-user.target
+

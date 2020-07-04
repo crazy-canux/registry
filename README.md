@@ -9,7 +9,7 @@ registry used to upgrade docker images on air-gap mode.
 build docker image and deploy with docker
 
     $ make image
-    $ docker stack deploy -c ./docker-compose.yml fish
+    $ docker stack deploy -c ./docker-compose.yml registry
     
 ***
 

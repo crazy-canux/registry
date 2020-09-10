@@ -78,7 +78,6 @@ fabric.properties
 ### Eclipse template
 
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak

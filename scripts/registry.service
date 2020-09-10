@@ -11,7 +11,8 @@ Type=simple
 # exists and systemd currently does not support the cgroup feature set required
 # for containers run by docker
 #ExecStartPre=
-ExecStart=/usr/bin/gunicorn -w 2 -k uvicorn.workers.UvicornWorker --log-level debug -b 0.0.0.0:8080 registry.main:app
+#ExecStart=/usr/bin/gunicorn -w 2 -k uvicorn.workers.UvicornWorker --log-level debug -b 0.0.0.0:8080 registry.main:app
+ExecStart=/usr/local/bin/distribution
 #ExecStartPost=
 RemainAfterExit=yes
 #ExecStop=
